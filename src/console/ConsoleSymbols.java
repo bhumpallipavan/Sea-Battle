@@ -14,18 +14,18 @@ package console;
 
 public class ConsoleSymbols {
 
-    // ===================== BLOCKS =====================
+    //=====================BLOCKS=====================
 
     public static final String FULL_BLOCK       = "\u2588"; // █
     public static final String SOLID_SQUARE     = "\u25A0"; // ■
 
-    // ===================== GAME STATUS ICONS =====================
+    //=====================GAME ICONS=====================
 
     public static final String HIT_CIRCLE       = "\u25CF"; // ●
     public static final String MISS_X            = "X";      // X
     public static final String SEA_WAVE          = "~";      // ~
 
-    // ===================== BANNERS & DECOR =====================
+    //=====================DECORATIVE==========================
 
     public static final String TROPHY            = "\uD83C\uDFC6"; // 🏆
     public static final String PARTY_POPPER      = "\uD83C\uDF89"; // 🎉
@@ -33,7 +33,7 @@ public class ConsoleSymbols {
     public static final String EXPLOSION         = "\uD83D\uDCA5"; // 💥
     public static final String CROSS_MARK        = "\u274C";       // ❌
 
-    // ===================== BOX DRAWING (BOARD) =====================
+    //=====================BOX DRAWING (BOARD) =====================
 
     public static final String TOP_LEFT          = "\u250C"; // ┌
     public static final String TOP_RIGHT         = "\u2510"; // ┐
@@ -44,9 +44,12 @@ public class ConsoleSymbols {
     public static final String VERTICAL          = "\u2502"; // │
 
     public static final String T_TOP             = "\u252C"; // ┬
+    
     public static final String T_BOTTOM          = "\u2534"; // ┴
     public static final String T_LEFT            = "\u251C"; // ├
+    
     public static final String T_RIGHT           = "\u2524"; // ┤
+    
     public static final String CROSS             = "\u253C"; // ┼
 
 }

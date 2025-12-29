@@ -31,4 +31,9 @@ public class AIPlayer extends Player{
     public void displayPoints() {
     	//do not display anything
     }
+    
+    public void printMessageForException()
+    {
+    	//print nothing
+    }
 }

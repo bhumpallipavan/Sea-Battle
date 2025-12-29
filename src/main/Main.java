@@ -37,7 +37,7 @@ public class Main {
 
         Scanner sc = new Scanner(System.in);
 
-        boolean MANUAL_PLACEMENT = false;
+        boolean MANUAL_PLACEMENT = true;
 
         displayRules();
 //============================================================ASK FOR NO OF PLAYERS PLAYING=======================================================
@@ -100,6 +100,8 @@ public class Main {
             } else {
                 setupRandomBoard(player2);
             }
+            System.out.println("\nFinal board for " + p2Name + ":");
+            player2.displayOwnBoard();
             
             
 
@@ -115,8 +117,7 @@ public class Main {
         }
 
         
-        System.out.println("\nFinal board for " + p2Name + ":");
-        player2.displayOwnBoard();
+        
         pause(sc);
         
 //====================================================================================================================================================        
@@ -135,12 +136,6 @@ public class Main {
 
 // =================================================================== GAME LOOP =====================================================================
         
-//        System.out.println("██████████████████████████████████████████████████████████████");
-//        System.out.println("█                                                            █");
-//        System.out.println("█                B A T T L E   B E G I N S                   █");
-//        System.out.println("█                                                            █");
-//        System.out.println("██████████████████████████████████████████████████████████████");
-        //System.out.println();
         
         System.out.println(ConsoleSymbols.FULL_BLOCK.repeat(62));
         System.out.println(ConsoleSymbols.FULL_BLOCK +"                                                            " +ConsoleSymbols.FULL_BLOCK);
@@ -174,7 +169,7 @@ public class Main {
 //========================================================================== HELPER METHODS ==========================================================
 
     //============RULES===============
-    private static void displayRules() {
+    public static void displayRules() {
     	
     	System.out.println("                 |\\");
     	System.out.println("                 | \\");
@@ -204,6 +199,7 @@ public class Main {
     	System.out.println("| Destroyed Ship    | Revealed with ship symbol              |            | Carrier       |  5   |        1         |   "
     	        + ConsoleColors.BRIGHT_PURPLE + ConsoleSymbols.SOLID_SQUARE + ConsoleColors.RESET + "               |");
     	System.out.println("| Win Condition     | Destroy all opponent ships             |            --------------------------------------------------------------");
+    	System.out.println("| Recent Attack     | Red color                              |");
     	System.out.println("--------------------------------------------------------------");
     	System.out.println();
 
@@ -211,7 +207,7 @@ public class Main {
     }
 
     //==========ADDING SHIPS TO PLAYER===========
-    private static void addShips(Player player) {
+    public static void addShips(Player player) {
         player.addShip(new DestroyerShip());
         player.addShip(new Submarine());
         player.addShip(new Submarine());
@@ -221,7 +217,7 @@ public class Main {
     
     
     //=============DEFAULT BOARDS MAKING===============
-    private static void setupRandomBoard(Player player) {
+    public static void setupRandomBoard(Player player) {
 
         Random random = new Random();
 
@@ -247,12 +243,12 @@ public class Main {
     }
 
     
-    private static void pause(Scanner sc) {
+    public static void pause(Scanner sc) {
         System.out.println("\nPress ENTER to continue...");
         sc.nextLine();
     }
     
-    private static void displayVictoryScreen(String winnerName,
+    public static void displayVictoryScreen(String winnerName,
             int hits,
             int shipsDestroyed) {
 
@@ -280,7 +276,7 @@ public class Main {
     	System.out.println();
     }
     
-    private static int getChoice(Scanner sc)
+    public static int getChoice(Scanner sc)
     {
     	int gameMode = 0;
 

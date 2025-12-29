@@ -110,24 +110,24 @@ public class Board {
         return null; // miss
     }
 
-//====================== DISPLAY LOGIC ======================
-
+//======================================= DISPLAY LOGIC =======================================
+    
     // What opponent sees
 
-//    public void displayHiddenBoard() {
-//
-//    	System.out.println(getHiddenBoardHeader());
-//    	System.out.println(getTopBorder());
-//
-//    	for (int i = 0; i < size; i++) {
-//    		System.out.println(getHiddenBoardRow(i));
-//    	    if (i < size - 1) {
-//               System.out.println(getMiddleBorder());
-//   	        }
-//   	    }
-//
-//        System.out.println(getBottomBorder());
-//    }
+    public void displayHiddenBoard() {
+
+    	System.out.println(getHiddenBoardHeader());
+    	System.out.println(getTopBorder());
+
+    	for (int i = 0; i < size; i++) {
+    		System.out.println(getHiddenBoardRow(i));
+    	    if (i < size - 1) {
+               System.out.println(getMiddleBorder());
+   	        }
+   	    }
+
+        System.out.println(getBottomBorder());
+    }
 
 
 
@@ -149,7 +149,7 @@ public class Board {
         System.out.println(getBottomBorder());
     }
 
-    private boolean isLastHit(int row, int col) {
+    public boolean isLastHit(int row, int col) {
         return row == lastHitRow && col == lastHitCol;
     }
     
@@ -157,6 +157,7 @@ public class Board {
     
  // =================RENDERING HELPERS =================
 
+    //A   B   C   D   E   F   G   H   I   J 
     public String getOwnBoardHeader() {
         StringBuilder sb = new StringBuilder("    ");
         for (int c = 0; c < size; c++) {
@@ -165,108 +166,12 @@ public class Board {
         return sb.toString();
     }
 
+    //A   B   C   D   E   F   G   H   I   J 
     public String getHiddenBoardHeader() {
         return getOwnBoardHeader();
     }
-
-//    public String getTopBorder() {
-//        StringBuilder sb = new StringBuilder("  ┌");
-//        for (int c = 0; c < size; c++) {
-//            sb.append("───");
-//            if (c < size - 1) sb.append("┬");
-//        }
-//        sb.append("┐");
-//        return sb.toString();
-//    }
-//
-//    public String getMiddleBorder() {
-//        StringBuilder sb = new StringBuilder("  ├");
-//        for (int c = 0; c < size; c++) {
-//            sb.append("───");
-//            if (c < size - 1) sb.append("┼");
-//        }
-//        sb.append("┤");
-//        return sb.toString();
-//    }
-//
-//    public String getBottomBorder() {
-//        StringBuilder sb = new StringBuilder("  └");
-//        for (int c = 0; c < size; c++) {
-//            sb.append("───");
-//            if (c < size - 1) sb.append("┴");
-//        }
-//        sb.append("┘");
-//        return sb.toString();
-//    }
-//
-//    public String getOwnBoardRow(int row) {
-//        StringBuilder sb = new StringBuilder();
-//        sb.append(row).append(" │");
-//
-//        for (int col = 0; col < size; col++) {
-//            Cell cell = grid[row][col];
-//
-//            if (cell.hasShip()) 
-//            {
-//                if (cell.isHit()) 
-//                {
-//                	if (isLastHit(row, col)) 
-//                		sb.append(" ").append("\u001B[91m■\u001B[0m").append(" │"); // LAST HIT
-//                	else 
-//                    sb.append(" ").append("■").append(" │"); // normal hit
-//                } 
-//                else
-//                {
-//                    sb.append(" ").append(cell.getShip().getSymbol()).append(" │");
-//                }
-//            } 
-//            else 
-//            {
-//            	if(cell.isHit())
-//            	{
-//            		if (isLastHit(row, col)) 
-//                		sb.append(" ").append("\u001B[91mX\u001B[0m").append(" │"); // LAST HIT
-//                	else
-//                		sb.append(" X │");
-//            	}
-//            	else sb.append(" ~ │");
-//            }
-//        }
-//        return sb.toString();
-//    }
-//
-//    public String getHiddenBoardRow(int row) {
-//        StringBuilder sb = new StringBuilder();
-//        sb.append(row).append(" │");
-//
-//        for (int col = 0; col < size; col++) {
-//            Cell cell = grid[row][col];
-//            String symbol;
-//
-//            if (!cell.isHit()) 
-//            {
-//                symbol = "~";
-//            } 
-//            else if (cell.hasShip()) 
-//            {
-//            	
-//            	if(isLastHit(row,col))
-//            		symbol = cell.getShip().isDestroyed() ? "\u001B[91m■\u001B[0m" : "\u001B[91m●\u001B[0m";
-//            	else
-//            		symbol = cell.getShip().isDestroyed() ? cell.getShip().getSymbol() : "●";
-//                
-//            } 
-//            else 
-//            {
-//            	if(isLastHit(row,col)) symbol="\u001B[91mX\u001B[0m";
-//            	else symbol = "X";
-//            }
-//
-//            sb.append(" ").append(symbol).append(" │");
-//        }
-//        return sb.toString();
-//    }
     
+    //┌───┬───┬───┬───┬───┬───┬───┬───┬───┬───┐
     public String getTopBorder() {
         StringBuilder sb = new StringBuilder("  ").append(ConsoleSymbols.TOP_LEFT);
 
@@ -280,7 +185,7 @@ public class Board {
         return sb.toString();
     }
     
-    
+    //├───┼───┼───┼───┼───┼───┼───┼───┼───┼───┤
     public String getMiddleBorder() {
         StringBuilder sb = new StringBuilder("  ").append(ConsoleSymbols.T_LEFT);
 
@@ -294,7 +199,7 @@ public class Board {
         return sb.toString();
     }
     
-    
+    //└───┴───┴───┴───┴───┴───┴───┴───┴───┴───┘
     public String getBottomBorder() {
         StringBuilder sb = new StringBuilder("  ").append(ConsoleSymbols.BOTTOM_LEFT);
 
@@ -308,7 +213,7 @@ public class Board {
         return sb.toString();
     }
     
-    
+    //│ ~ │ ~ │ ~ │ ~ │ ~ │ ~ │ ~ │ ~ │ ~ │ ~ │
     public String getOwnBoardRow(int row) {
         StringBuilder sb = new StringBuilder();
         sb.append(row).append(" ").append(ConsoleSymbols.VERTICAL);

@@ -63,21 +63,20 @@ public class Player {
         return shipsDestroyed == ships.size();
     }
 
-//======================= SHIP SETUP ====================
-
     public void addShip(Ship ship) {
         ships.add(ship);
     }
 
-//=======PLACING SHIPS ACCORDING TO PLAYER COORDINATES==============
+//=======SHIPS SETUP==============
     public void placeAllShips() {
         System.out.println("\n" + name + " - Place your ships");
 
         for (Ship ship : ships) {
 
+        	displayOwnBoard();
         	//while true takes input until the inputs are valid
             while (true) {
-                displayOwnBoard();
+                
 
                 System.out.println("Enter the starting correct coordinates for Placing " + ship.getClass().getSimpleName() +" (size " + ship.getSize() + ")");
 
@@ -100,61 +99,14 @@ public class Player {
                 	System.out.println("Enter integers between 0 and 9 please");
                 	sc.nextLine();
                 }
+                catch(InvalidInputFormatException e)
+                {
+                	System.out.println(e.getMessage());
+                }
             }
         }
     }
 
-//================= DISPLAY METHODS ====================
-
-    // Only the owner can see full board
-    public void displayOwnBoard() {
-        board.displayOwnBoard();
-    }
-
-    // What opponent is allowed to see
-//    public void displayBoardToOpponent() {
-//        board.displayHiddenBoard();
-//    }
-    
-    public void displayPoints() {
-        System.out.println("    ┌───────────────────────────────┐");
-        System.out.println("    │            SCOREBOARD         │");
-        System.out.println("    ├─────────────────────┬─────────┤");
-        System.out.println("    │ Total Hits          │   " + hitCount + "     │");
-        System.out.println("    │ Ships Destroyed     │   " + shipsDestroyed + "     │");
-        System.out.println("    └─────────────────────┴─────────┘");
-    }
-    
-    public void displayBoardsSideBySide(Player opponent) {
-
-        Board own = this.board;
-        Board enemy = opponent.board;
-
-        System.out.println();
-        System.out.println("        YOUR BOARD                             OPPONENT BOARD");
-        System.out.println();
-
-        // Headers
-        System.out.println(own.getOwnBoardHeader() + "        " + enemy.getHiddenBoardHeader());
-
-        // Top borders
-        System.out.println(own.getTopBorder() + "        " + enemy.getTopBorder());
-
-        // Rows
-        for (int row = 0; row < 10; row++) {
-
-            System.out.println(own.getOwnBoardRow(row) + "        " + enemy.getHiddenBoardRow(row));
-
-            if (row < 9) {
-                System.out.println(own.getMiddleBorder() + "        " + enemy.getMiddleBorder());
-            }
-        }
-
-        // Bottom borders
-        System.out.println(own.getBottomBorder() + "        " + enemy.getBottomBorder());
-
-        System.out.println();
-    }
 
 //========================= ATTACK FLOW ====================
 
@@ -179,8 +131,7 @@ public class Player {
         	}
         	catch(CellAlreadyHitException | InvalidCoordinateException e)
         	{
-        		System.out.println(e.getMessage());
-        		System.out.println("Please enter new coordinates");
+        		printMessageForException(e);
         	}
         	catch(InputMismatchException e)
         	{
@@ -188,24 +139,15 @@ public class Player {
         		//to free the taken input and not go into infinite loop
         		sc.nextLine();
         	}
+        	catch(InvalidInputFormatException e)
+            {
+            	System.out.println(e.getMessage());
+            }
         }
         //opponent.displayBoardToOpponent();
         
         displayBoardsSideBySide(opponent);
-        
-//        if (hitShip != null) {
-//            handleSuccessfulHit(hitShip);
-//            System.out.println();
-//            System.out.println("    █████████████████████████████████");
-//            System.out.println("       💥  HIT CONFIRMED  💥      ");
-//            System.out.println("    █████████████████████████████████");
-//        } else {
-//        	System.out.println();
-//        	System.out.println("    ─────────────────────────────────");
-//        	System.out.println("             ❌  MISS  ❌           ");
-//        	System.out.println("    ─────────────────────────────────");
-//
-//        }
+     
         if (hitShip != null) {
 
             handleSuccessfulHit(hitShip);
@@ -226,7 +168,7 @@ public class Player {
     }
 
     // Opponent attacks THIS player
-    private Ship receiveAttack(int row, int col) throws CellAlreadyHitException, InvalidCoordinateException{
+    public Ship receiveAttack(int row, int col) throws CellAlreadyHitException, InvalidCoordinateException{
         return board.attackCell(row, col);
     }
 
@@ -240,6 +182,58 @@ public class Player {
         }
     }
 
+  //======================== DISPLAY METHODS ================================
+
+    // Only the owner can see full board
+    public void displayOwnBoard() {
+        board.displayOwnBoard();
+    }
+
+    // What opponent is allowed to see
+    public void displayBoardToOpponent() {
+        board.displayHiddenBoard();
+    }
+    
+    public void displayPoints() {
+        System.out.println("    ┌───────────────────────────────┐");
+        System.out.println("    │            SCOREBOARD         │");
+        System.out.println("    ├─────────────────────┬─────────┤");
+        System.out.println("    │ Total Hits          │   " + hitCount + "     │");
+        System.out.println("    │ Ships Destroyed     │   " + shipsDestroyed + "     │");
+        System.out.println("    └─────────────────────┴─────────┘");
+    }
+    
+    public void displayBoardsSideBySide(Player opponent) {
+
+        Board own = this.board;
+        Board enemy = opponent.board;
+
+        System.out.println();
+        System.out.println("        YOUR BOARD                                      OPPONENT BOARD");
+        System.out.println();
+
+        // Headers
+        System.out.println(own.getOwnBoardHeader() + "        " + enemy.getHiddenBoardHeader());
+
+        // Top borders
+        System.out.println(own.getTopBorder() + "        " + enemy.getTopBorder());
+
+        // Rows
+        for (int row = 0; row < 10; row++) {
+
+            System.out.println(own.getOwnBoardRow(row) + "        " + enemy.getHiddenBoardRow(row));
+
+            if (row < 9) {
+                System.out.println(own.getMiddleBorder() + "        " + enemy.getMiddleBorder());
+            }
+        }
+
+        // Bottom borders
+        System.out.println(own.getBottomBorder() + "        " + enemy.getBottomBorder());
+
+        System.out.println();
+    }
+
 //====================== INPUT METHODS =====================
 
     protected int getRowInput() throws InputMismatchException{
@@ -251,7 +245,7 @@ public class Player {
         return x;
     }
 
-    protected char getColumnInput() {
+    protected char getColumnInput() throws InvalidInputFormatException {
     	while(true)
     	{
     		try
@@ -278,7 +272,7 @@ public class Player {
         
     }
 
-    private char getDirectionInput() {
+    private char getDirectionInput() throws InvalidInputFormatException{
     	while (true) {
     		try {
     			System.out.print("Enter direction (H/V): ");
@@ -301,11 +295,11 @@ public class Player {
     	}
     }
     
-    private void printTurnBanner(String name) {
+    public void printTurnBanner(String name) {
         System.out.println();
-        System.out.println("==============================================================");
-        System.out.println("||                "+ConsoleSymbols.FIRE+"  " + name.toUpperCase() + "'S TURN  "+ConsoleSymbols.FIRE+"                       ||");
-        System.out.println("==============================================================");
+        System.out.println(       "==============================================================");
+        System.out.println(       "||                "+ConsoleSymbols.FIRE+"  " + name.toUpperCase() + "'S TURN  "+ConsoleSymbols.FIRE+"                       ||");
+        System.out.println(       "==============================================================");
         //System.out.println();
     }
     
@@ -314,6 +308,12 @@ public class Player {
         board.placeShip(ship, row, col, direction);
     }
     
+ //HELPER METHOD   
+    public void printMessageForException(Exception e)
+    {
+    	System.out.println(e.getMessage());
+		System.out.println("Please enter new coordinates");
+    }
     
     
 
